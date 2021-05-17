@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
 
+//Componente es de clase
+/**
+ * componentDidMount()
+ * componentidUpdate()
+ * componentWillUnmount()
+ */
+
 const Button = () => {
-  const [counter, setCounter] = useState(0);
-  return (
-    <div>
-      <p>Presionado: {counter}</p>
-      <button onClick={() => setCounter(counter + 1)}>Click me!</button>
-    </div>
-  );
+  //Aquí no debe haber efectos secundarios
+  //hook
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log('Me ejecuté');
+  }, []);
+  return <button onClick={() => setCount(count + 1)} >click {count}</button>;
 };
 
 const App = () => {
