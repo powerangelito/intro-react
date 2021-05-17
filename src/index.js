@@ -1,29 +1,20 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 
-const nombres = ['Angel', 'Elisa', 'Rebeca', 'Lucila', 'Antonio', 'Aldo'];
-
-// destructuring {nombre} de props
-// parametros por defecto de ecmascript
-const Saludar = ({ nombre, idioma = 'en' }) => {
-  // const nombre = 'Angel';
-  const saludo = idioma === 'es' ? 'Hola' : 'Hello';
+const Button = () => {
+  const [counter, setCounter] = useState(0);
   return (
-    <p>
-      {saludo} {nombre}
-    </p>
+    <div>
+      <p>Presionado: {counter}</p>
+      <button onClick={() => setCounter(counter + 1)}>Click me!</button>
+    </div>
   );
 };
-
-//código legado de reactt
-// Saludar.defaultProps = {
-//   idioma: 'en'
-// };
 
 const App = () => {
   return (
     <div>
-      <Saludar nombre="Angel" idioma="es" />
+      <Button />
     </div>
   );
 };
