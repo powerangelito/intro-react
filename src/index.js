@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { render } from 'react-dom';
 
-const Form = () => {
+const Form = ({ showed }) => {
   let [title, setTitle] = useState('');
   let [body, setBody] = useState('');
+
+  const firstInput = useRef();
+
+  useEffect(() => {
+    // console.log(':)');
+    if (showed) {
+      console.log(firstInput);
+      firstInput.current.focus();
+    }
+  }, [showed]);
 
   const sendForm = ev => {
     ev.preventDefault();
@@ -35,6 +45,7 @@ const Form = () => {
           value={title}
           id="title"
           onChange={ev => setTitle(ev.target.value)}
+          ref={firstInput}
         />
       </div>
       <div>
@@ -50,10 +61,20 @@ const Form = () => {
   );
 };
 
+const Accordion = () => {
+  const [show, setShow] = useState(false);
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Mostrar formulario</button>
+      {show && <Form showed={show} />}
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <div>
-      <Form />
+      <Accordion />
     </div>
   );
 };
