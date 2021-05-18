@@ -1,82 +1,90 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { render } from 'react-dom';
+import PropTypes from 'prop-types';
 
-const Form = ({ showed }) => {
-  let [title, setTitle] = useState('');
-  let [body, setBody] = useState('');
-
-  const firstInput = useRef();
-
+let Example = props => {
+  let [contador, setContador] = useState(0);
+  //efectos secundarios
   useEffect(() => {
-    // console.log(':)');
-    if (showed) {
-      console.log(firstInput);
-      firstInput.current.focus();
-    }
-  }, [showed]);
-
-  const sendForm = ev => {
-    ev.preventDefault();
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      body: JSON.stringify({
-        title: title,
-        body: body,
-        userId: 1
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
-        setTitle('');
-        setBody('');
-        console.log(json);
-      });
-  };
-
-  return (
-    <form onSubmit={ev => sendForm(ev)}>
-      <div>
-        <label htmlFor="title">Título</label>
-        <input
-          type="text"
-          value={title}
-          id="title"
-          onChange={ev => setTitle(ev.target.value)}
-          ref={firstInput}
-        />
-      </div>
-      <div>
-        <label htmlFor="body">Publicación</label>
-        <textarea
-          id="body"
-          value={body}
-          onChange={ev => setBody(ev.target.value)}
-        />
-      </div>
-      <input type="submit" value="Enviar" />
-    </form>
-  );
-};
-
-const Accordion = () => {
-  const [show, setShow] = useState(false);
+    console.log('Fui actualizado');
+  }, []);
+  //cuando hay un arreglo al final, se comporta como componentDidMount
   return (
     <div>
-      <button onClick={() => setShow(true)}>Mostrar formulario</button>
-      {show && <Form showed={show} />}
+      <p>Contador: {contador}</p>
+      <button onClick={() => setContador(contador + 1)}>Sumar</button>
     </div>
   );
 };
 
-const App = () => {
-  return (
-    <div>
-      <Accordion />
-    </div>
-  );
-};
+// class App extends Component {
+//   static defaultProps = {
+//     name: 'Rebeca'
+//   };
 
-render(<App />, document.getElementById('react-app'));
+//   static propTypes = {
+//     name: PropTypes.string
+//   };
+
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       contador: 0,
+//       updatedAt: null
+//       // intv: null
+//     };
+
+//     // this.updateCounter = this.updateCounter.bind(this);
+//   }
+
+//   componentDidMount() {
+//     console.log('Fui creado!');
+//     // let intervalo = setInterval(
+//     //   () => this.setState({ contador: this.state.contador + 1 }),
+//     //   1000
+//     // );
+
+//     // this.setState({
+//     //   intv: intervalo
+//     // });
+//   }
+
+//   componentDidUpdate(prevProps, prevState, snapshot) {
+//     // console.log(prevState, this.state, snapshot);
+//     // if (prevState.contador !== this.state.contador)
+//     //   this.setState({
+//     //     updatedAt: new Date()
+//     //   });
+//     // console.log('Fui actualizado');
+//   }
+
+//   // getSnapshotBeforeUpdate() {
+//   //   console.log('Antes del DOM');
+//   //   return 3;
+//   // }
+
+//   componentWillUnmount() {
+//     alert('Bye');
+//     // clearInterval(this.state.intv);
+//   }
+
+//   // updateCounter() {
+//   //   this.setState({ contador: this.state.contador + 1 });
+//   // }
+
+//   updateCounter = () => {
+//     this.setState({ contador: this.state.contador + 1 });
+//   };
+
+//   render() {
+//     console.log(this.props);
+//     return (
+//       <>
+//         <p>Contador: {this.state.contador}</p>
+//         <button onClick={this.updateCounter}>Sumar</button>
+//       </>
+//     );
+//   }
+// }
+
+render(<Example />, document.getElementById('root'));
